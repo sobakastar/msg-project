@@ -2,16 +2,39 @@ import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
 import { Message } from "./components/Message/Message";
+import { Counter } from "./components/Example/Example";
+import { useState } from "react";
+import { Form } from "./components/Form/Form";
 
-const name = "Alex";
+
+const name = "me";
+
+const msgs = [
+  {
+    author: name,
+    text: "text1",
+  },
+  {
+    author: name,
+    text: "text2",
+  },
+];
 
 function App() {
-  const foo = () => {
-    alert("Hello!");
+  const [messages, setMessages] = useState(msgs);
+
+  const addMessage = (newText) => {
+    setMessages([...messages, { text: newText, author: name }]);
   };
+
   return (
     <div className="App">
-      <Message name={name} number={123 + 3} doSmth={foo}/>
+      {/* <Counter randomNumber={rand}/> */}
+      {messages.map((msg) => (
+        <Message text={msg.text} author={msg.author} />
+      ))}
+    {/*<button onClick={addMessage}>Add msg</button> */}
+      <Form onSubmit={addMessage} />
     </div>
   );
 }

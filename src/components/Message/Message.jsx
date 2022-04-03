@@ -1,8 +1,11 @@
-export const Message = ({ name, number }) => {
+import "./Message.styles.scss";
+
+export const Message = ({ author, text }) => {
   return (
-    <h3>
-      I am a message: {name}, {number}
-    </h3>
+    <div className="message">
+      <span>{author}:</span>
+      <span>{text}</span>
+    </div>
   );
 };
 
