@@ -1,44 +1,60 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
 import { Message } from "./components/Message/Message";
-import { Counter } from "./components/Example/Example";
+// import { Counter } from "./components/Example/Example";
 import { useState } from "react";
 import { Form } from "./components/Form/Form";
+import { useEffect } from "react";
+import { MessageList } from "./components/MessageList/MessageList";
+import { AUTHORS } from "./utils/constants";
 
-
-const name = "me";
-
-const msgs = [
-  {
-    author: name,
-    text: "text1",
-  },
-  {
-    author: name,
-    text: "text2",
-  },
-];
+// const human = "me";
 
 function App() {
-  const [messages, setMessages] = useState(msgs);
+  //const [messageList, setMessageList] = useState([]);
+  const [messages, setMessages] = useState([]);
 
-  const addMessage = (newText) => {
-    setMessages([...messages, { text: newText, author: name }]);
+  const addMessage = (newMsg) => {
+    setMessages([...messages, newMsg]);
   };
+
+  const sendMessage = (text) => {
+    addMessage(
+      {
+        author: AUTHORS.human,
+        text, // text: text
+      },
+      1000 // не работает ?
+    );
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (messages[messages.length - 1]?.author === AUTHORS.human) {
+      timeout = setTimeout(() => {
+        addMessage({ author: AUTHORS.robot, text: "hello" });
+      });
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [messages]);
 
   return (
     <div className="App">
       {/* <Counter randomNumber={rand}/> */}
-      {messages.map((msg) => (
+      {/*{messageList.map((msg) => (
         <Message text={msg.text} author={msg.author} />
-      ))}
-    {/*<button onClick={addMessage}>Add msg</button> */}
-      <Form onSubmit={addMessage} />
+      ))} */}
+      
+      <MessageList messages={messages} />
+      <Form onSubmit={sendMessage} />
     </div>
   );
 }
-
+// ------------------------
 // export class AppClass extends React.Component {
 //   render () {
 //     return (
