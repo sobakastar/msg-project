@@ -1,4 +1,7 @@
+import PropTypes from "prop-types";
+
 import "./Message.styles.scss";
+
 
 export const Message = ({ author, text }) => {
   return (
@@ -8,6 +11,11 @@ export const Message = ({ author, text }) => {
     </div>
   );
 };
+
+Message.propTypes = {
+  author: PropTypes.string.isRequired,
+   text: PropTypes.string,
+}
 
 // import React from "react";
 
